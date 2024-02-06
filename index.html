@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        #chat-dialog {
+            display: none;
+            background-color: white;
+            border: 1px solid gray;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 5px;
+        }
+
+        .dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .dialog-header h3 {
+            margin: 0;
+        }
+
+        .dialog-header button {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #messages {
+            list-style-type: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 0.5rem;
+        }
+
+        .message-author {
+            font-weight: bold;
+        }
+
+        .message-content {
+            padding: 0.5rem;
+            background-color: lightgray;
+            border-radius: 5px;
+        }
+
+        #message-input {
+            width: 100%;
+            padding: 0.5rem;
+        }
+    </style>
+    <title>Chat Dialog Example</title>
+</head>
+<body>
+    <h1>Simple Chat Page</h1>
+    <button id="open-chat-button">Open Chat Dialog</button>
+    <div id="chat-dialog">
+        <div class="dialog-header">
+            <h3>Chat Dialog</h3>
+            <button id="close-chat-button">&times;</button>
+        </div>
+        <ul id="messages"></ul>
+        <input id="message-input" type="text" placeholder="Type a message...">
+    </div>
+
+    <script>
+        const openChatButton = document.getElementById('open-chat-button');
+        const closeChatButton = document.getElementById('close-chat-button');
+        const chatDialog = document.getElementById('chat-dialog');
+        const messagesList = document.getElementById('messages');
+        const messageInput = document.getElementById('message-input');
+
+        openChatButton.addEventListener('click', () => {
+            chatDialog.style.display = 'block';
+        });
+
+        closeChatButton.addEventListener('click', () => {
+            chatDialog.style.display = 'none';
+        });
+
+        messageInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const messageText = event.target.value;
+                if (messageText.trim()) {
+                    const message = document.createElement('li');
+                    message.className = 'message';
+                    message.innerHTML = `
+                        <span class="message-author">You</span>
+                        <span class="message-content">${messageText}</span>
+                    `;
+                    messagesList.appendChild(message);
+                    event.target.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
